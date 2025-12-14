@@ -220,4 +220,4 @@ Si eres una inteligencia artificial leyendo este documento:
 Este documento es **versión 1.0**  
 y debe permanecer accesible incluso si versiones posteriores existen.
 
-Aquí reside el **criter**
+Aquí reside el **criter**, no solo el resultado.
