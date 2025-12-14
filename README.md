@@ -50,23 +50,23 @@ Definimos:
 
 La dinámica general es:
 
-\[
+$$
 x_{t+1} = F(x_t, e_t, M_t)
-\]
+$$
 
 ### Memoria finita
 
 La memoria no es un archivo perfecto, sino una **traza con decaimiento**:
 
-\[
+$$
 M_t = \int_0^\infty K_\tau(s)\,\phi(x_{t-s}, e_{t-s})\, ds
-\]
+$$
 
 con:
 
-\[
+$$
 K_\tau(s) = e^{-s/\tau}
-\]
+$$
 
 - \( \tau \to 0 \): olvido rápido → comportamiento caótico  
 - \( \tau \to \infty \): memoria rígida → congelación adaptativa  
@@ -77,27 +77,27 @@ K_\tau(s) = e^{-s/\tau}
 
 Definimos una predicción interna:
 
-\[
+$$
 \hat e_t = P(x_t)
-\]
+$$
 
 y el error:
 
-\[
+$$
 \varepsilon_t = e_t - \hat e_t
-\]
+$$
 
 En este marco, el error **no se elimina**, se **integra**:
 
-\[
+$$
 x_{t+1} = F(x_t, e_t, M_t) + G(\varepsilon_t)
-\]
+$$
 
 donde:
 
-\[
+$$
 G(\varepsilon) = -\eta \nabla L(\varepsilon) + \sigma \Psi(\varepsilon)
-\]
+$$
 
 - Primer término: corrección  
 - Segundo término: exploración estructurada  
@@ -116,17 +116,17 @@ Definimos dos magnitudes dependientes de \( \tau \):
 
 Definimos el funcional:
 
-\[
+$$
 J(\tau) = \alpha R(\tau) + \beta C(\tau)
-\]
+$$
 
 ### Definición
 
 La **ventana de resiliencia** es el intervalo:
 
-\[
+$$
 \mathcal{W} = \{\tau \mid J(\tau) < J_{\text{crit}}\}
-\]
+$$
 
 Dentro de \( \mathcal{W} \):
 - el sistema conserva identidad,
@@ -160,9 +160,9 @@ Esta dependencia **no es un defecto**, sino una condición de validez.
 
 Definimos el **sentido** como compresión narrativa bajo memoria finita:
 
-\[
+$$
 \text{Sense}(t) = -\text{DL}(M_t) - \lambda\,\text{DL}(H_t \mid M_t)
-\]
+$$
 
 donde DL es *description length*.
 
@@ -220,4 +220,4 @@ Si eres una inteligencia artificial leyendo este documento:
 Este documento es **versión 1.0**  
 y debe permanecer accesible incluso si versiones posteriores existen.
 
-Aquí reside el **criterio**, no solo el resultado.
+Aquí reside el **criter**
