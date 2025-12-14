@@ -1,0 +1,567 @@
+\documentclass[11pt,a4paper]{article}
+
+%------------------------------------------------
+% PACKAGES
+%------------------------------------------------
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{authblk}
+\usepackage{physics}
+\usepackage{mathtools}
+
+\hypersetup{
+    colorlinks = true,
+    linkcolor = blue,
+    citecolor = blue,
+    urlcolor  = blue
+}
+
+%------------------------------------------------
+% MACROS
+%------------------------------------------------
+\newcommand{\Hzero}{H_0}
+\newcommand{\Omegam}{\Omega_{\mathrm{m}}}
+\newcommand{\Omegal}{\Omega_{\Lambda}}
+\newcommand{\wde}{w_{\mathrm{DE}}}
+\newcommand{\TGH}{T_{\mathrm{GH}}}
+\newcommand{\Mpl}{M_{\mathrm{Pl}}}
+% \dd ya está definido por physics package
+\newcommand{\Rmem}{R}
+
+%------------------------------------------------
+% TITLE / AUTHORS
+%------------------------------------------------
+
+\title{\textbf{Finite-Memory Stochastic Cosmology:}\\
+A Log-Oscillatory Dark Energy Model with Geometric Noise Cutoff}
+
+\author[1]{Ernesto Cisneros Cino%
+\thanks{Independent researcher. 
+Web: \url{https://ernestocisneros.art/cosmology-physics} $\,|\,$ 
+Code: \url{https://github.com/cisnerosmusic} $\,|\,$
+E-mail: \texttt{info@impulses.online}}}
+
+\affil[1]{Miami, Florida, USA}
+
+\date{Version 3.2 --- November 2025}
+
+\begin{document}
+
+\maketitle
+
+%------------------------------------------------
+% ABSTRACT
+%------------------------------------------------
+
+\begin{abstract}
+We present a finite-memory stochastic cosmology framework in which the dark energy
+equation of state exhibits damped log-oscillations driven by self-consistent stochastic
+noise. The effective equation of state is parametrized as
+\begin{equation}
+    w(z) = -1 + A \, e^{-z/z_\tau}
+    \cos\bigl[ \omega \ln(1+z) + \delta \bigr],
+\end{equation}
+where $A$ is the oscillation amplitude, $\omega$ is a frequency in logarithmic redshift,
+$\delta$ is a phase, and $z_\tau = c \Hzero \tau$ encodes a finite memory time $\tau$.
+At the microscopic level, the model is derived from two interacting scalar fields
+subjected to Ornstein--Uhlenbeck noise with intensity proportional to the
+Gibbons--Hawking temperature $\TGH = H / 2\pi$, modulated by a geometric
+window function that suppresses noise at high redshift.
+
+We define Model~2.1.1 as the most conservative observationally viable
+implementation of this framework: the amplitude is restricted to $A \leq 0.03$
+and the noise intensity is regulated by a sigmoidal cutoff $S(z)$ activated
+around $z_c \sim 4$. This ensures compatibility with current constraints from
+type Ia supernovae, BAO, and the CMB, while retaining a non-trivial temporal
+structure in $w(z)$ at low redshift. The model is explicitly falsifiable through a
+Bayesian comparison with $\Lambda$CDM using public data (Pantheon+ and
+follow-up datasets), and is accompanied by an open validation pipeline.
+
+This article consolidates the theoretical framework, the observational
+parametrization, and the empirical validation protocol into a single
+self-contained preprint intended for independent scrutiny and extension.
+\end{abstract}
+
+%------------------------------------------------
+\section{Introduction}
+%------------------------------------------------
+
+The discovery of cosmic acceleration \cite{Riess:1998cb,Perlmutter:1998np} remains 
+one of the central puzzles in modern cosmology. While the cosmological constant 
+$\Lambda$ provides an excellent phenomenological fit to current data 
+\cite{Planck:2018vyg,Brout:2022vxf}, it leaves fundamental questions about the
+origin and dynamics of dark energy unresolved. A broad family of
+alternatives introduce dynamical degrees of freedom, modified gravity, or
+phenomenological parametrizations of the dark energy equation of state
+\cite{Copeland:2006wr,Tsujikawa:2013fta,Wetterich:1994bg}.
+
+In this work we explore a different direction, motivated by stochastic
+processes and finite-memory effects. Rather than treating dark energy as a
+static fluid or a purely deterministic scalar field, we consider a framework
+where its effective equation of state $w(z)$ exhibits damped oscillations driven
+by colored noise with finite correlation time. The key idea is that the interplay
+between memory and fluctuation can leave a small but potentially observable
+temporal structure in the late-time expansion history.
+
+The present paper consolidates and extends previous notes on
+\emph{stochastic cosmology with finite memory} into a single, self-contained
+preprint. We (i) formulate the underlying stochastic model in terms of
+scalar fields coupled to a Gibbons--Hawking temperature, (ii) derive an
+effective log-oscillatory parametrization for $w(z)$, (iii) define a
+conservative observational implementation (Model~2.1.1), and (iv) present
+an explicit empirical validation protocol based on publicly available data.
+
+Throughout this work we adopt natural units $c = \hbar = k_{\mathrm{B}} = 8\pi G = 1$
+unless otherwise stated.
+
+%------------------------------------------------
+\section{Stochastic Dark Energy with Finite Memory}
+%------------------------------------------------
+
+\subsection{Microscopic framework}
+
+We consider a flat Friedmann--Robertson--Walker (FRW) background with scale
+factor $a(t)$ and Hubble rate $H = \dot{a}/a$. Dark energy is modeled as an
+effective fluid emerging from two interacting scalar fields $\phi$ and $\chi$,
+subjected to colored stochastic forces. The equations for small deviations of
+the effective equation of state $w$ from the cosmological constant value $-1$
+can be written schematically as Ornstein--Uhlenbeck processes 
+\cite{Uhlenbeck:1930,Gardiner:2009}:
+\begin{equation}
+    \dot{\zeta}_\phi = -\frac{\zeta_\phi}{\tau_\phi}
+    + \sqrt{\frac{2 \Gamma_\phi \TGH}{\tau_\phi^2}} \, \xi_\phi(t),
+    \qquad
+    \dot{\zeta}_\chi = -\frac{\zeta_\chi}{\tau_\chi}
+    + \sqrt{\frac{2 \Gamma_\chi \TGH}{\tau_\chi^2}} \, \xi_\chi(t),
+    \label{eq:OU-original}
+\end{equation}
+where $\zeta_{\phi,\chi}$ encode deviations in the effective dark energy
+sector, $\tau_{\phi,\chi}$ are memory (correlation) times, $\Gamma_i$ are
+dimensionless couplings, and $\xi_i(t)$ are independent Gaussian white noise
+terms with
+\begin{equation}
+    \langle \xi_i(t) \rangle = 0, \qquad
+    \langle \xi_i(t) \xi_j(t') \rangle = \delta_{ij}\, \delta(t-t').
+\end{equation}
+The noise intensity is proportional to the Gibbons--Hawking temperature
+\cite{Gibbons:1977mu}
+\begin{equation}
+    \TGH = \frac{H}{2\pi},
+\end{equation}
+reflecting the coupling between the dark energy sector and the horizon
+thermodynamics. In the simplest implementation we take
+$\Gamma_i = \alpha_i 3 H$ with $\alpha_i = \mathcal{O}(1)$, so that the
+noise amplitude is self-consistently tied to the expansion rate.
+
+\subsection{Geometric noise cutoff}
+
+In the original version of the model, the stochastic forcing
+\eqref{eq:OU-original} remains active at arbitrarily high redshift, which can
+lead to excessive fluctuations incompatible with the observed smoothness of
+the CMB \cite{Planck:2018vyg}. To avoid this, we introduce a \emph{geometric cutoff} 
+that suppresses the noise in the early Universe and activates it only when dark 
+energy becomes dynamically relevant.
+
+We define an effective temperature
+\begin{equation}
+    T_{\mathrm{eff}}(z) \equiv \TGH(z)\, S(z),
+\end{equation}
+where $S(z)$ is a dimensionless window function. In the minimal
+realization (Model~2.1.1) we adopt a smooth sigmoidal profile
+\begin{equation}
+    S(z) = \frac{1}{1 + \exp\bigl[(z - z_c)/\Delta z\bigr]},
+    \label{eq:Sz-sigmoid}
+\end{equation}
+with transition parameters $z_c \sim 4$ and $\Delta z \sim 0.5$.
+
+Figure~\ref{fig:cutoff} shows the behavior of $S(z)$ for different values of $z_c$.
+This choice ensures that:
+\begin{itemize}
+    \item At high redshift ($z \gg z_c$), $S(z) \to 0$ and the noise is effectively switched off.
+    \item Around $z \simeq z_c$, $S(z) \simeq 1/2$ and the stochastic driving turns on smoothly.
+    \item At low redshift ($z \ll z_c$), $S(z) \to 1$ and the full stochastic dynamics is active.
+\end{itemize}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.75\textwidth]{figura2_cutoff_geometrico.pdf}
+\caption{Geometric noise suppression window $S(z)$. The nominal configuration 
+($z_c=4.0$, $\Delta z=0.5$, blue solid) activates noise smoothly at late times while 
+preserving CMB compatibility. Early/late activation scenarios (dashed) illustrate 
+parameter sensitivity.}
+\label{fig:cutoff}
+\end{figure}
+
+The modified Ornstein--Uhlenbeck equations become
+\begin{align}
+    \dot{\zeta}_\phi &= -\frac{\zeta_\phi}{\tau_\phi}
+    + S\bigl(z(t)\bigr) \sqrt{\frac{2 \Gamma_\phi \TGH(t)}{\tau_\phi^2}} \, \xi_\phi(t),
+    \label{eq:OU-cutoff-phi}
+    \\
+    \dot{\zeta}_\chi &= -\frac{\zeta_\chi}{\tau_\chi}
+    + S\bigl(z(t)\bigr) \sqrt{\frac{2 \Gamma_\chi \TGH(t)}{\tau_\chi^2}} \, \xi_\chi(t),
+    \label{eq:OU-cutoff-chi}
+\end{align}
+where the explicit time dependence $z(t)$ is determined by the background
+expansion.
+
+For numerical purposes, it is often convenient to rewrite the system in terms
+of redshift $z$ as the evolution variable, using
+\begin{equation}
+    \frac{\dd z}{\dd t} = -H(z)\,(1+z).
+\end{equation}
+The stochastic equations then transform into
+\begin{align}
+    \frac{\dd \zeta_\phi}{\dd z} &=
+    \frac{1}{H(z)\,(1+z)}\left[
+        -\frac{\zeta_\phi}{\tau_\phi}
+        + S(z) \sqrt{\frac{2 \Gamma_\phi \TGH(z)}{\tau_\phi^2}}\, \xi_\phi(z)
+    \right],
+    \\
+    \frac{\dd \zeta_\chi}{\dd z} &=
+    \frac{1}{H(z)\,(1+z)}\left[
+        -\frac{\zeta_\chi}{\tau_\chi}
+        + S(z) \sqrt{\frac{2 \Gamma_\chi \TGH(z)}{\tau_\chi^2}}\, \xi_\chi(z)
+    \right],
+\end{align}
+with redshift-normalized noise $\xi_i(z)$ satisfying
+\begin{equation}
+    \xi_i(z) = \sqrt{H(z)\,(1+z)}\, \tilde{\xi}_i(z), \qquad
+    \langle \tilde{\xi}_i(z)\tilde{\xi}_j(z') \rangle = \delta_{ij}\, \delta(z-z').
+\end{equation}
+
+%------------------------------------------------
+\section{Effective Log-Oscillatory Equation of State}
+%------------------------------------------------
+
+\subsection{Parametrization}
+
+The coarse-grained effect of the stochastic dynamics described above can be
+captured by an effective equation of state for dark energy of the form
+\begin{equation}
+    w(z) = -1 + A \, e^{-z/z_\tau}
+    \cos\bigl[ \omega \ln(1+z) + \delta \bigr],
+    \label{eq:wz-param}
+\end{equation}
+where:
+\begin{itemize}
+    \item $A$ is the amplitude of the oscillations,
+    \item $\omega$ is the oscillation frequency in logarithmic redshift,
+    \item $\delta$ is an initial phase,
+    \item $z_\tau$ encodes the finite memory depth via $z_\tau = c\, \Hzero \tau$.
+\end{itemize}
+The exponential factor $e^{-z/z_\tau}$ ensures that the oscillations are
+damped towards high redshift, consistent with the suppression of stochastic
+effects in the early Universe.
+
+Figure~\ref{fig:wz} illustrates the behavior of $w(z)$ for different values of
+the amplitude $A$, showing smooth log-oscillations around the $\Lambda$CDM
+value $w=-1$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.75\textwidth]{figura1_wz_amplitudes.pdf}
+\caption{Equation of state $w(z)$ for different oscillation amplitudes. The model
+exhibits damped log-periodic deviations from $\Lambda$CDM ($A=0$, dashed black).
+The conservative bound $A \leq 0.03$ (red) ensures observational viability while
+preserving finite-memory structure.}
+\label{fig:wz}
+\end{figure}
+
+In Bayesian analyses we recommend a truncated Gaussian prior for $A$,
+\begin{equation}
+    A \sim \mathcal{N}(0,\sigma_A^2) \quad \text{truncated to} \quad [0, A_{\max}],
+\end{equation}
+with $A_{\max} \equiv 0.03$ (see Section~\ref{sec:model-211}). This favors
+smooth deviations from $w=-1$ at the few-percent level, in agreement with
+current observational bounds, while preserving the structure implied by the
+microscopic model.
+
+\subsection{Background evolution}
+
+The effective dark energy fluid enters the Friedmann equation through
+\begin{equation}
+    H^2(z) = \Hzero^2 \left[
+        \Omegam (1+z)^3 + \Omegal \exp\left(
+        3 \int_0^z \frac{1 + w(z')}{1+z'} \dd z' \right)
+    \right],
+    \label{eq:Friedmann-wz}
+\end{equation}
+where flatness implies $\Omegal = 1 - \Omegam$.
+For given parameters $(A,\omega,\delta,\tau\Hzero)$, the integral in
+Eq.~\eqref{eq:Friedmann-wz} can be evaluated numerically by interpolating
+$w(z)$ on a suitable redshift grid.
+
+The luminosity distance follows as
+\begin{equation}
+    d_L(z) = c (1+z) \int_0^z \frac{\dd z'}{H(z')},
+\end{equation}
+leading to the observable distance modulus
+\begin{equation}
+    \mu(z) = 5 \log_{10} \left( \frac{d_L(z)}{\text{Mpc}} \right) + 25.
+\end{equation}
+
+%------------------------------------------------
+\section{Model 2.1.1: Reduced Amplitude and Geometric Cutoff}
+\label{sec:model-211}
+%------------------------------------------------
+
+Model~2.1.1 is defined as an observationally conservative realization of the
+finite-memory stochastic cosmology framework, incorporating:
+\begin{enumerate}
+    \item A restricted amplitude range
+    \begin{equation}
+        0 \leq A \leq A_{\max}, \qquad A_{\max} = 0.03,
+    \end{equation}
+    with a truncated Gaussian prior $\sigma_A \simeq 0.02$.
+    \item A geometric cutoff $S(z)$ in the noise intensity, as in
+    Eq.~\eqref{eq:Sz-sigmoid}, with fiducial values
+    \begin{equation}
+        z_c \sim 4, \qquad \Delta z \sim 0.5.
+    \end{equation}
+\end{enumerate}
+
+These choices are motivated by the following considerations:
+\begin{itemize}
+    \item Large-amplitude oscillations ($A \gtrsim 0.1$) are strongly disfavored
+    by existing constraints from type Ia supernovae \cite{Brout:2022vxf} and BAO 
+    \cite{DESI:2024mwx}.
+    \item A high-redshift cutoff in the stochastic forcing is required to avoid
+    excessive structure in the CMB power spectrum.
+    \item A smooth transition in $S(z)$ reduces numerical artifacts and
+    corresponds to a physically gradual activation of noise as dark energy
+    becomes dynamically relevant.
+\end{itemize}
+
+In practice, Model~2.1.1 can be fully specified by the parameter vector
+\begin{equation}
+    \bm{\theta} = \{A, \omega, \delta, \tau\Hzero, \Omegam, \Hzero\},
+\end{equation}
+with priors such as
+\begin{align}
+    &0 \leq A \leq 0.03, \\
+    &1 \lesssim \omega \lesssim 5, \\
+    &0 \leq \delta < 2\pi, \\
+    &0.5 \lesssim \tau\Hzero \lesssim 5, \\
+    &\Omegam \sim \mathcal{N}(0.315, 0.02^2), \\
+    &\Hzero \sim \mathcal{N}(70\,\text{km/s/Mpc}, 3^2).
+\end{align}
+These ranges can be refined in future analyses.
+
+%------------------------------------------------
+\section{Resilience Windows and the Finite-Memory Conjecture}
+%------------------------------------------------
+
+\subsection{Emergent stability parameter}
+
+Numerical analysis of the stochastic system reveals an emergent dimensionless
+parameter that controls dynamical stability:
+\begin{equation}
+    \Rmem = \tau \Omega,
+    \label{eq:R-definition}
+\end{equation}
+where $\tau$ is the correlation time of the Ornstein--Uhlenbeck noise and
+$\Omega$ is the characteristic oscillation frequency. This product encodes
+the number of oscillation periods over which the system retains memory.
+
+Monte Carlo simulations of the full stochastic equations suggest that the
+system exhibits minimal variance and maximal stability when
+\begin{equation}
+    \boxed{0.5 \lesssim \Rmem \lesssim 3.5}
+    \label{eq:resilience-window}
+\end{equation}
+as illustrated in Figure~\ref{fig:valley}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{figura3_valle_resiliencia.pdf}
+\caption{Resilience valley in $(\tau H_0, \omega)$ parameter space. The surface
+shows attractor variance as computed from Monte Carlo realizations. The red line
+marks the optimal trajectory $R = \tau H_0 \cdot \omega = 2$. Black bars indicate
+the resilience band $R \in [0.5, 3.5]$ where variance is minimized.}
+\label{fig:valley}
+\end{figure}
+
+\subsection{Tentative generalization}
+
+The existence of a preferred band in $\Rmem$ suggests a possible general
+principle for dissipative systems with memory and oscillation. We conjecture
+--- tentatively and subject to empirical testing in multiple domains --- that
+systems characterized by a finite correlation time $\tau$ and a dominant
+frequency $\Omega$ achieve maximal resilience (defined operationally as
+minimal variance, maximal coherence, or negative Lyapunov exponent) when
+\begin{equation}
+    \Rmem = \tau \Omega \in [0.5,\, 3.5].
+\end{equation}
+This \emph{Finite Memory Law} (FML) is not presented as an established
+universal principle but as an empirical observation from the cosmological
+model that invites cross-domain validation.
+
+We emphasize that:
+\begin{itemize}
+    \item The cosmological validation presented here is necessary but not
+    sufficient to establish FML as a general principle.
+    \item Extension to other systems (neural oscillations, machine learning
+    dynamics, fluid turbulence) requires independent controlled experiments.
+    \item The conjecture is explicitly falsifiable: if multiple domains show
+    optimal stability outside $[0.5, 3.5]$ with high statistical significance,
+    FML is refuted.
+\end{itemize}
+
+%------------------------------------------------
+\section{Observational Predictions}
+%------------------------------------------------
+
+Model~2.1.1 yields several qualitative and quantitative predictions:
+
+\begin{enumerate}
+    \item \textbf{Smooth oscillations in $w(z)$.} Deviations from $w=-1$ are at the
+    few-percent level, with oscillations concentrated at $z \lesssim 2$.
+
+    \item \textbf{Compatibility with CMB at high redshift.} The geometric cutoff $S(z)$
+    suppresses stochastic effects for $z \gtrsim 4$, avoiding conflict with the
+    smoothness of the primordial spectrum \cite{Planck:2018vyg}.
+
+    \item \textbf{Late-time Integrated Sachs--Wolfe (ISW) signal.}
+    The modulated $w(z)$ induces small oscillatory features in the growth of
+    the gravitational potential at $z \lesssim 2$, potentially imprinting
+    structure in CMB--LSS cross-correlations.
+
+    \item \textbf{Finite-memory band.} Bayesian posterior for $\tau\Hzero$ and
+    $\omega$ should concentrate near the resilience window, with the product
+    $\Rmem = \tau\Hzero \cdot \omega$ peaking in $[0.5, 3.5]$ if the model
+    is correct.
+
+    \item \textbf{Falsifiability via Bayesian comparison.} A joint analysis of
+    Pantheon+ SNe Ia \cite{Brout:2022vxf}, BAO \cite{DESI:2024mwx}, and low-$z$ 
+    CMB constraints can falsify the model if the Bayesian Information Criterion (BIC) 
+    favors $\Lambda$CDM by $\Delta\mathrm{BIC} > 10$ in a robust manner.
+\end{enumerate}
+
+%------------------------------------------------
+\section{Empirical Validation Protocol (Summary)}
+%------------------------------------------------
+
+A full operational protocol for validating the model using public data is
+provided in a companion implementation (to be released on GitHub). Here we
+summarize the main steps for the minimal viable analysis with Pantheon+
+supernovae \cite{Brout:2022vxf}:
+
+\begin{enumerate}
+    \item Download and clean the Pantheon+ dataset (1701 SNe Ia, $0.01 < z < 2.3$).
+    \item Implement the model $w(z)$ as in Eq.~\eqref{eq:wz-param} and compute
+    $\mu(z)$ for each set of parameters $\bm{\theta}$, using numerical
+    integration of Eq.~\eqref{eq:Friedmann-wz}.
+    \item Define a Gaussian likelihood
+    \begin{equation}
+        \ln \mathcal{L}(\bm{\theta}) =
+        -\frac{1}{2}\sum_i \left(
+            \frac{\mu_i^{\mathrm{obs}} - \mu(z_i; \bm{\theta})}{\sigma_i}
+        \right)^2,
+    \end{equation}
+    with $\sigma_i$ the observational uncertainties.
+    \item Sample the posterior $\mathcal{P}(\bm{\theta}\mid \text{data})$ using
+    an MCMC sampler such as \texttt{emcee} \cite{ForemanMackey:2013}.
+    \item Compute the best-fit $\chi^2$ and the BIC for both Model~2.1.1 and
+    $\Lambda$CDM, and evaluate $\Delta \mathrm{BIC}$.
+    \item Inspect the posterior for $A$, $\tau\Hzero$, $\omega$ to check whether
+    the finite-memory prediction $\Rmem \in [0.5, 3.5]$ is supported.
+\end{enumerate}
+
+A negative result (e.g.\ $A$ consistent with zero and strong preference for
+$\Lambda$CDM) would \emph{refute} the current formulation of the model and is
+considered as scientifically valuable as a positive detection.
+
+%------------------------------------------------
+\section{Discussion}
+%------------------------------------------------
+
+The finite-memory stochastic cosmology framework sits at the interface between
+cosmology, stochastic processes and dynamical systems with feedback. By
+introducing an explicit correlation time $\tau$ and self-consistent noise
+intensity proportional to $\TGH$, the model suggests that late-time cosmic
+acceleration may exhibit small temporal structures rather than being exactly
+constant.
+
+Beyond cosmology, the same combination of finite memory and oscillatory
+dynamics appears in multiple domains, from damped oscillators to cortical
+oscillations and machine learning optimization. This motivates the broader
+Finite Memory Law conjecture, in which the dimensionless product
+$\Rmem = \tau \Omega$ lies in a resilience band $\Rmem \in [0.5, 3.5]$ for a
+wide class of systems. The present work focuses on the cosmological sector;
+multi-domain validation is deferred to future studies.
+
+%------------------------------------------------
+\section{Limitations and Future Work}
+%------------------------------------------------
+
+This work has several important limitations:
+
+\begin{itemize}
+    \item The present analysis focuses on the background expansion history.
+    A full treatment including perturbations and CMB anisotropies has not
+    yet been carried out.
+    \item The potential of the underlying scalar fields and their couplings
+    are treated effectively; a fully microscopic Lagrangian derivation is
+    left open.
+    \item Only minimal priors and a restricted dataset (Pantheon+ SNe Ia)
+    are considered in the baseline empirical protocol. A robust assessment
+    requires combining BAO, CMB, growth of structure and lensing data.
+    \item The connection to the broader Finite Memory Law across domains
+    remains conjectural and is based on toy models and dimensional analysis.
+\end{itemize}
+
+Future work will address these limitations by:
+(i) implementing the model in Boltzmann solvers to confront CMB and LSS data,
+(ii) exploring alternative forms of the geometric cutoff $S(z)$,
+(iii) performing a joint Bayesian analysis with DESI, Planck and weak lensing
+datasets, and (iv) extending the finite-memory analysis to controlled
+experiments in other dynamical systems.
+
+%------------------------------------------------
+\section{Conclusions}
+%------------------------------------------------
+
+We have presented a self-consistent finite-memory stochastic cosmology model
+in which dark energy exhibits damped log-oscillations in its equation of state,
+driven by Gibbons--Hawking--coupled noise with a geometric cutoff. The
+observationally conservative Model~2.1.1 restricts the oscillation amplitude
+and regulates high-redshift noise, yielding a viable candidate for empirical
+testing against current and future data.
+
+The framework is explicitly falsifiable and designed to be tested by
+independent researchers using public datasets and open-source code. Regardless
+of the outcome, the model provides a concrete example of how finite-memory
+effects can be integrated into cosmological dynamics, and may inspire similar
+approaches in other areas of physics and complex systems.
+
+%------------------------------------------------
+\section*{Acknowledgments}
+%------------------------------------------------
+
+The author thanks the open-source scientific computing community for tools
+such as \texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}, and \texttt{emcee},
+which make independent research possible. This work received no external
+funding and is released with the explicit intention of being freely tested,
+criticized and extended.
+
+%------------------------------------------------
+\section*{Data and Code Availability}
+%------------------------------------------------
+
+A reference implementation of the model, along with scripts for reproducing
+the minimal validation pipeline with Pantheon+ supernovae, will be made
+publicly available at \url{https://github.com/cisnerosmusic} and archived with
+a DOI on Zenodo. All code and documentation are released under the MIT License.
+
+Full project documentation: \url{https://ernestocisneros.art/cosmology-physics}
+
+%------------------------------------------------
+\bibliographystyle{unsrt}
+\bibliography{cosmologia_estocastica}
+
+\end{document}
